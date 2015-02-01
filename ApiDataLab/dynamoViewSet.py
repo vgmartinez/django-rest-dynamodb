@@ -14,6 +14,12 @@ class dynamo_viewset(viewsets.ModelViewSet):
     serializer_class = AutorSerializer
     queryset = result.response['Items']
 
+    def list(self, request, *args, **kwargs):
+        items=self.table.scan()
+        data=items.response
+
+        return Response(data)
+
     def create(self, request, *args, **kwargs):
         """
         Función POST para agregar una nueva entrada en la base de datos
